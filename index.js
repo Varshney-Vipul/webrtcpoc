@@ -6,9 +6,13 @@ var cors = require("cors");
 // var cors = require('cors');
 var io = require("socket.io")(server, {
   serveClient: true,
+  cors: {
+    origin: ".*",
+    methods: ["GET", "POST"],
+  },
 });
 
-//app.use(cors());
+app.use(cors());
 app.set("socket-io", io);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
