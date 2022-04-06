@@ -7,7 +7,7 @@ var cors = require("cors");
 var io = require("socket.io")(server, {
   serveClient: true,
   cors: {
-    origin: ".*",
+    origin: "*",
     methods: ["GET", "POST"],
   },
 });
