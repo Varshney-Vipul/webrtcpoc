@@ -25,6 +25,7 @@ server.listen(port, () => console.log(`listening to ${port}`));
 
 io.on("connection", (socket) => {
   console.log(socket.id + " Connected!");
+  io.emit("indeed", "client said hello !");
   socket.on("hello", () => {
     io.emit("indeed", "client said hello !");
   });
