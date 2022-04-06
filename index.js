@@ -21,7 +21,7 @@ let port = process.env.PORT;
 if (port == null || port == "") {
   port = 8090;
 }
-server.listen(PORT, () => console.log(`listening to ${PORT}`));
+server.listen(port, () => console.log(`listening to ${PORT}`));
 
 io.on("connection", (socket) => {
   console.log(socket.id + " Connected!");
