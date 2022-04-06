@@ -6,13 +6,9 @@ var cors = require("cors");
 // var cors = require('cors');
 var io = require("socket.io")(server, {
   serveClient: true,
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
 });
 
-app.use(cors());
+//app.use(cors());
 app.set("socket-io", io);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -26,6 +22,6 @@ server.listen(PORT, () => console.log(`listening to ${PORT}`));
 io.on("connection", (socket) => {
   console.log(socket.id + " Connected!");
   socket.on("hello", () => {
-    console.log("client said hello !");
+    io.emit("indeed", "client said hello !");
   });
 });
