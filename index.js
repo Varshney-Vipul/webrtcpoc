@@ -17,7 +17,10 @@ app.set("socket-io", io);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-const PORT = 8090;
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8090;
+}
 server.listen(PORT, () => console.log(`listening to ${PORT}`));
 
 io.on("connection", (socket) => {
