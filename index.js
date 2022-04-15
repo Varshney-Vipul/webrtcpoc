@@ -16,7 +16,7 @@ var io = require("socket.io")(server, {
 
 const membersArray = [];
 
-const numConCreated = 0;
+var numConCreated = 0;
 
 app.use(cors());
 app.set("socket-io", io);
