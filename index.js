@@ -3,6 +3,8 @@ const app = express();
 var server = require("http").Server(app);
 var cors = require("cors");
 
+const roomCode = "sdfjhl";
+
 // var cors = require('cors');
 var io = require("socket.io")(server, {
   serveClient: true,
@@ -28,5 +30,10 @@ io.on("connection", (socket) => {
   io.emit("indeed", "client said hello !");
   socket.on("hello", () => {
     io.emit("indeed", "client said hello !");
+  });
+
+  socket.on("lobby-details", () => {
+    socket.join(roomCode);
+    io.to(roomCode).emit({ success: true, roomCode: roomCode });
   });
 });
