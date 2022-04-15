@@ -53,6 +53,18 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("peer-offer", (data) => {
+    socket.to(roomCode).emit("remote-peer-offer", data);
+  });
+
+  socket.on("peer-answer", (data) => {
+    socket.to(roomCode).emit("remote-peer-answer", data);
+  });
+
+  socket.on("peer-ice-candidate", (data) => {
+    socket.to(roomCode).emit("remote-peer-ice-candidate", data);
+  });
+
   socket.on("disconnect", () => {
     const temp = membersArray.indexOf(socket.id);
     if (temp >= 0) {
