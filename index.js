@@ -50,6 +50,9 @@ io.on("connection", (socket) => {
         toSend.role = "receiver";
       }
       io.to(socket.id.toString()).emit("lobby-details", toSend);
+      io.to(roomCode).emit("lobby-member-count", {
+        memCount: membersArray.length,
+      });
     }
   });
 
