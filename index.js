@@ -16,6 +16,8 @@ var io = require("socket.io")(server, {
 
 const membersArray = [];
 
+const numConCreated = 0;
+
 app.use(cors());
 app.set("socket-io", io);
 app.use(express.urlencoded({ extended: false }));
@@ -68,8 +70,19 @@ io.on("connection", (socket) => {
     socket.to(roomCode).emit("remote-peer-ice-candidate", data);
   });
 
+  socket.on("peer-connection-created", (data) => {
+    numConCreated = numConCreated + 1;
+    if (numConCreated === 2) {
+      io.to(roomCode).emit("initiate-offer");
+    }
+  });
+
   socket.on("disconnect", () => {
     const temp = membersArray.indexOf(socket.id);
+    numConCreated = numConCreated - 1;
+    if (numConCreated < 0) {
+      numConCreated = 0;
+    }
     if (temp >= 0) {
       membersArray.splice(temp, 1);
     }
