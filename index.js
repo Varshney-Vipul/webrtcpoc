@@ -32,8 +32,11 @@ io.on("connection", (socket) => {
     io.emit("indeed", "client said hello !");
   });
 
-  socket.on("lobby-details", () => {
+  socket.on("fetch-lobby-details", () => {
     socket.join(roomCode);
-    io.to(roomCode).emit({ success: true, roomCode: roomCode });
+    io.to(roomCode).emit("lobby-details", {
+      success: true,
+      roomCode: roomCode,
+    });
   });
 });
