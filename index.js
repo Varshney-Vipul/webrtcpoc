@@ -38,10 +38,17 @@ io.on("connection", (socket) => {
     if (membersArray.length < 2) {
       membersArray.push(socket.id);
       socket.join(roomCode);
-      io.to(roomCode).emit("lobby-details", {
+      var toSend = {
         success: true,
         roomCode: roomCode,
-      });
+      };
+
+      if (membersArray.length === 1) {
+        toSend.role = "caller";
+      } else {
+        toSend.role = "receiver";
+      }
+      io.to(roomCode).emit("lobby-details", toSend);
     }
   });
 
