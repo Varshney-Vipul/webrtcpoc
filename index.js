@@ -28,6 +28,7 @@ if (port == null || port == "") {
 server.listen(port, () => console.log(`listening to ${port}`));
 
 io.on("connection", (socket) => {
+  socket.join(socket.id.toString());
   console.log(socket.id + " Connected!");
   io.emit("indeed", "client said hello !");
   socket.on("hello", () => {
@@ -48,7 +49,7 @@ io.on("connection", (socket) => {
       } else {
         toSend.role = "receiver";
       }
-      io.to(roomCode).emit("lobby-details", toSend);
+      io.to(socket.id.toString()).emit("lobby-details", toSend);
     }
   });
 
