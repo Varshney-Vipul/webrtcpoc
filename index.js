@@ -14,6 +14,8 @@ var io = require("socket.io")(server, {
   },
 });
 
+const membersArray = [];
+
 app.use(cors());
 app.set("socket-io", io);
 app.use(express.urlencoded({ extended: false }));
@@ -33,10 +35,20 @@ io.on("connection", (socket) => {
   });
 
   socket.on("fetch-lobby-details", () => {
-    socket.join(roomCode);
-    io.to(roomCode).emit("lobby-details", {
-      success: true,
-      roomCode: roomCode,
-    });
+    if (membersArray.length < 2) {
+      membersArray.push(socket.id);
+      socket.join(roomCode);
+      io.to(roomCode).emit("lobby-details", {
+        success: true,
+        roomCode: roomCode,
+      });
+    }
+  });
+
+  socket.on("disconnect", () => {
+    const temp = membersArray.indexOf(socket.id);
+    if (temp >= 0) {
+      membersArray.splice(temp, 1);
+    }
   });
 });
