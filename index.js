@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
   socket.on("peer-offer", (data) => {
     console.log("got offer ");
     console.log(data);
-    //socket.to(roomCode).emit("remote-peer-offer", data);
+    socket.to(roomCode).emit("remote-peer-offer", data);
   });
 
   socket.on("peer-answer", (data) => {
